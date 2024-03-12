@@ -2,12 +2,12 @@ package controller
 
 import (
 	"crypto/md5"
-	redisconn "entrytaskServer/cache"
-	"entrytaskServer/constant"
-	"entrytaskServer/dto"
-	"entrytaskServer/utils"
 	"errors"
 	"fmt"
+	redisconn "github.com/KeepMovingLr/taskserver/cache"
+	"github.com/KeepMovingLr/taskserver/constant"
+	"github.com/KeepMovingLr/taskserver/dto"
+	"github.com/KeepMovingLr/taskserver/utils"
 	"html/template"
 	"io"
 	"io/ioutil"
