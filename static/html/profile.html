@@ -1,0 +1,15 @@
+{{if .Success}}
+    <h1>Welcome to shopee, {{.User.UserName}} ! You can update the nickName and picture</h1>
+    <form enctype="multipart/form-data" method="POST" action="/updateNickNameResult">
+        <input hidden type="text" name="username" id="username" value="{{.User.UserName}}">
+        <input type="hidden" name="token" id="token" value="{{.User.Token}}">
+        <label>Nickname:</label><br/>
+        <input type="text" name="nickname" id="nickname" value="{{.User.NickName}}" required><br/>
+        <br/>
+        <input type="file" name="uploadfile" required/>
+        <input type="submit">
+    </form>
+    <img src="{{.User.ProfileUrl}}"/>
+{{else}}
+    <h1>There is something wrong with your login! ErrorMsg: {{.User.ErrorMsg}}</h1>
+{{end}}

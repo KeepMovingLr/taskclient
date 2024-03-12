@@ -1,0 +1,16 @@
+@startuml
+httpserver -> queryUserInfoByUserName: username
+queryUserInfoByUserName -> queryUserInfoByUserName: username not null check
+queryUserInfoByUserName -> queryUserInfoByUserName: username valid check
+queryUserInfoByUserName -> queryUserInfoByUserName: user login status check
+alt user not login
+httpserver <-- queryUserInfoByUserName: need login error code
+end
+queryUserInfoByUserName -> redis: query user info by username
+queryUserInfoByUserName <-- redis: user info
+alt user info not exist
+queryUserInfoByUserName -> db: query user info by username
+queryUserInfoByUserName <-- db: user info
+end
+httpserver <-- queryUserInfoByUserName: user info
+@enduml

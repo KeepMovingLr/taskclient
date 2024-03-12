@@ -1,0 +1,50 @@
+@startuml
+usecase Browser
+package "System Architecture" {
+node HTTPServer [
+<b>HTTP Server
+----
+]
+node TCPServer [
+<b>TCP Server
+----
+Local Cache
+----
+]
+node FileSystem [
+<b>Static File System
+]
+
+database database [
+<b>UserInfo Database
+----
+Current table: <b>User
+----
+....
+<b> Extension table:
+user_login_relation
+user_login_log
+user_info_modify_record
+....
+]
+
+database Redis [
+<b>Redis
+----
+Session
+User Cache
+----
+]
+
+HTTPServer == TCPServer
+Browser -- HTTPServer
+Browser -- FileSystem
+HTTPServer -- FileSystem
+
+
+TCPServer == Redis
+TCPServer .. Redis
+TCPServer == database
+
+}
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+httpserver -> updateUserInfo: User info
+updateUserInfo -> updateUserInfo: username not null check
+updateUserInfo -> updateUserInfo: User valid check
+updateUserInfo -> updateUserInfo: user login status check
+alt user not login
+httpserver <-- updateUserInfo: need login error code
+end
+updateUserInfo -> db: update user info by username
+updateUserInfo <-- db: modified rows
+updateUserInfo -> redis: update cache
+updateUserInfo <-- redis: update result
+httpserver <-- updateUserInfo: result
+@enduml

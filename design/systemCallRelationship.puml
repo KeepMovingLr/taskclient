@@ -1,0 +1,12 @@
+@startuml
+Browser -> httpServer: http request
+Browser <-- httpServer: http response
+httpServer -> redis: auth check
+httpServer <-- redis: auth check result
+httpServer -> ServiceServer: rpc call
+httpServer <- ServiceServer: rpc result
+ServiceServer -> redis: get user info
+ServiceServer <-- redis: user info
+ServiceServer -> db: crud
+ServiceServer <- db: result
+@enduml

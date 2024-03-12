@@ -1,0 +1,16 @@
+<config>
+    <TCPConfig>
+        <Host>127.0.0.1</Host>
+        <Port>:7777</Port>
+        <!-- ms -->
+        <ReadWaitTime>3600000</ReadWaitTime>
+        <WriteWaitTime>5000</WriteWaitTime>
+    </TCPConfig>
+    <ConnPoolConfig>
+        <InitCap>3</InitCap>
+        <MaxCap>5</MaxCap>
+        <!-- ms -->
+        <WaitTimeout>100</WaitTimeout>
+        <IdleTimeout>180000</IdleTimeout>
+    </ConnPoolConfig>
+</config>

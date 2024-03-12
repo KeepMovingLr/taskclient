@@ -1,0 +1,8 @@
+@startuml
+actor "User"
+package UserManagerSystem{
+User -> (Update Info)
+User -> (See Profile)
+User -> (Login)
+}
+@enduml

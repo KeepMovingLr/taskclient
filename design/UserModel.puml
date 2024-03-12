@@ -1,0 +1,62 @@
+@startuml
+' uncomment the line below if you're using computer with a retina display
+' skinparam dpi 300
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+' we use bold for primary key
+' green color for unique
+' and underscore for not_null
+!define primary_key(x) <b>x</b>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+' other tags available:
+' <i></i>
+' <back:COLOR></color>, where color is a color name or html color code
+' (#FFAACC)
+' see: http://plantuml.com/classes.html#More
+hide methods
+hide stereotypes
+
+' entities
+
+Table(user, "user\n(User in our system)") {
+primary_key(id) bigint[20],PK
+not_null(unique(user_name)) VARCHAR[64],UK
+not_null(nick_name) VARCHAR[64]
+profile_url VARCHAR[256]
+not_null(PASSWORD) VARCHAR[256]
+salt VARCHAR[64]
+feature VARCHAR[64]
+gmt_create bigint[20]
+gmt_modify bigint[20]
+}
+
+Table(user_login_log, "user_login_log\n(Sharding by user_id.\n not implement currently)") {
+primary_key(id) bigint[20],PK
+not_null(user_id) bigint[20],Sharding Id
+login_time bigint[20]
+login_ip VARCHAR[128]
+login_os VARCHAR[128]
+feature VARCHAR[64]
+}
+
+Table(user_info_modify_recode, "user_info_modify_recode\n(no need use sharding db but need back up regularly.\n not implement currently)") {
+primary_key(id) bigint[20],PK
+not_null(user_id) bigint[20],
+modify_time bigint[20]
+modify_key VARCHAR[128]
+modify_from_value VARCHAR[128]
+modify_to_value VARCHAR[128]
+}
+
+
+' relationships
+' one-to-one relationship
+' user -- user_profile : "A user only \nhas one profile"
+' one to may relationship
+user "1" -- "*" user_login_log : "A user may have\n many login info"
+user "1" -- "*" user_info_modify_recode : "A user may have\n many modify recode"
+' many to many relationship
+' Add mark if you like
+' user  -->  user_login_log : "A user may be \nin many groups"
+
+@enduml

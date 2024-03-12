@@ -1,0 +1,28 @@
+@startuml
+httpserver -> loginAuthenticate: username&password
+loginAuthenticate -> loginAuthenticate: username&password not null check
+loginAuthenticate -> localcache: get userInfo from localcache
+loginAuthenticate <-- localcache: userinfo
+alt userinfo is empty
+    loginAuthenticate -> db: query user info by username
+    loginAuthenticate -> loginAuthenticate: get userinfo
+    loginAuthenticate -> loginAuthenticate: check password
+    alt password check success
+    loginAuthenticate -> localcache: put user info to localcache
+    loginAuthenticate -> redis: write login info to redis
+    loginAuthenticate -> loginAuthenticate: compose user info
+    httpserver <-- loginAuthenticate: user info
+    else password check failed
+    httpserver <-- loginAuthenticate: error info
+    end
+else
+    loginAuthenticate -> loginAuthenticate: check password
+    alt password check success
+    loginAuthenticate -> redis: write login info to redis
+    loginAuthenticate -> loginAuthenticate: compose user info
+    httpserver <-- loginAuthenticate: user info
+    else password check failed
+    httpserver <-- loginAuthenticate: error info
+    end
+end
+@enduml
